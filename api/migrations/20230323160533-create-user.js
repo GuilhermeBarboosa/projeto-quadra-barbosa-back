@@ -21,7 +21,7 @@ module.exports = {
       idade: {
         type: Sequelize.INTEGER
       },
-      role:{
+      roles:{
         allowNull: false,
         type: Sequelize.INTEGER,
         references: {
