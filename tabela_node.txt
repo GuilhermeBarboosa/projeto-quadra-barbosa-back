@@ -1,0 +1,21 @@
+DEFAULT active, created, updated
+
+Rules - adm, jogador, dono
+User - id, nome, email, senha, idade, rules(fk), active
+
+Times - id, time, qtd_jogadores, qtd_pontos, partidas_jogadas, vitorias, perdidas, empate, active
+
+Posicao - id, posicao
+
+Jogador - id, posicao(fk), time(fk), user(fk), active
+
+Campeonatos - id, campeonato, active
+
+Time_Campeonato - id, time(fk), campeonato(fk), active
+
+
+
+TABELAS CONCLUIDAS 
+times
+posicao
+campeonato

@@ -1,0 +1,11 @@
+npm install express
+npm install body-parser
+npm install nodemon
+npm install mysql2
+npm install sequilize sequilize-cli path
+npx sequelize-cli init
+npx sequelize-cli model:create --name Campeonatos --attributes campeonato:string,actived:boolean 
+npx sequelize-cli db:migrate
+npx sequelize-cli seed:generate --name demo-campeoantos
+npx sequelize-cli db:seed:all
+npx sequelize-cli db:seed:undo:all
