@@ -26,7 +26,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         references: {
           model: 'roles',
-          key: 'id'
+          key: 'role'
         }
       },
       actived: {

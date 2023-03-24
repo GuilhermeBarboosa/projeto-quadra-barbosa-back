@@ -4,7 +4,11 @@ class usersController {
     static async getAll(req, res) {
         try{
             const getlAllUsers = await database.users.findAll({
-                where: { actived: true }
+                where: { actived: true },
+                include: {
+                    model: database.roles,
+                    as : "roleResponse"
+                }
             });
             return res.status(200).json(getlAllUsers);
         }catch(error){
@@ -17,9 +21,10 @@ class usersController {
             const { id } = req.params;
             const getByIdUsers = await database.users.findOne({
                 where: { id: Number(id), actived: true },
-                include: {
-                    model: database.roles
-                }
+                include: [{
+                    model: database.roles,
+                    as : "roleResponse"
+                }]
             });
             return res.status(200).json(getByIdUsers);
         }catch(error){
