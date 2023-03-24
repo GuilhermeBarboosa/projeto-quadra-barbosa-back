@@ -105,6 +105,10 @@ class usersController {
 
             });
 
+            if (!getByIdUsers) {
+                return res.status(401).json("Usuário não encontrado!");
+            }
+       
             if (await bcrypt.compare(req.body.senha, getByIdUsers.senha)) {
                 let token = jwt.sign(
                     { id: getByIdUsers.id, nome: getByIdUsers.nome, idade: getByIdUsers.idade, role: getByIdUsers.roleResponse.role },
