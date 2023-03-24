@@ -1,6 +1,7 @@
 const database = require('../models');
 const bcrypt = require('bcrypt');
-
+const jwt = require('jsonwebtoken');
+require("dotenv").config();
 class usersController {
     static async getAll(req, res) {
         try {
@@ -72,19 +73,19 @@ class usersController {
 
     static async getLogin(req, res) {
         try {
-            const { email } = req.body.email;
 
-            console.log(req.body.email);
-            console.log(req.body.senha);
+            // console.log(req.body.email);
+            const { email } = req.body.email;
 
             const getByIdUsers = await database.users.findOne({
                 where: {
-        
-                email: {
-                    [database.Sequelize.Op.like]: `%${req.body.email}%`
+
+                    email: {
+                        [database.Sequelize.Op.like]: `%${req.body.email}%`
                     },
-                
-                actived: true },
+
+                    actived: true
+                },
 
                 include: [{
                     model: database.roles,
@@ -93,15 +94,38 @@ class usersController {
 
             });
 
-            if(await bcrypt.compare(req.body.senha, getByIdUsers.senha)){
-                return res.status(200).json(getByIdUsers);
-            }else{
+            if (await bcrypt.compare(req.body.senha, getByIdUsers.senha)) {
+                let token = jwt.sign(
+                    { id: getByIdUsers.id, nome: getByIdUsers.nome, idade: getByIdUsers.idade, role: getByIdUsers.roleResponse.role },
+                    process.env.JWT_SECRET,
+                    { expiresIn: 300 });
+                return res.json({ auth: true, token })
+                // return res.status(200).json(getByIdUsers);
+            } else {
                 return res.status(401).json("Senha incorreta!");
             }
-  
+
         } catch (error) {
             return res.status(500).json(error.message);
         }
+    }
+
+    static async logout(req, res) {
+        blacklist.push(req.headers['x-access-token']);
+        res.status(200).send("Logout realizado com sucesso!");
+    }
+
+    static async verifyToken(req, res) {
+
+        let token = req.body.token || req.query.token || req.headers['x-access-token'];
+        if (!token) return res.status(401).json({ auth: false, message: 'No token provided.' });
+
+        jwt.verify(token, process.env.JWT_SECRET, function (err, decoded) {
+            if (err) return res.status(500).json({ auth: false, message: 'Failed to authenticate token.' });
+
+            req.userId = decoded.id;
+            res.status(200).json(decoded);
+        });
     }
 }
 
