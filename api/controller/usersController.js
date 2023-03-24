@@ -38,6 +38,17 @@ class usersController {
         try {
             const newUsers = { ...req.body, roles: Number(req.body.roles) };
 
+            const userExists = await database.users.findOne({
+                where: {
+                    email: newUsers.email,
+                    actived: true
+                }
+            });
+
+            if (userExists) {
+                return res.status(400).json("Usuário já cadastrado!");
+            }
+            
             newUsers.senha = await bcrypt.hashSync(newUsers.senha, 10);
 
             const createUsers = await database.users.create(newUsers);
