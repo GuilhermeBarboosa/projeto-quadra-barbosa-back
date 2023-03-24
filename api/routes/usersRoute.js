@@ -3,9 +3,10 @@ const usersController = require('../controller/usersController');
 
 const router = Router();
 
+router.get('/users/login', usersController.getLogin);
 router.get('/users', usersController.getAll);
-router.get('/users/:id', usersController.getById);
 router.post('/users', usersController.create);
+router.get('/users/:id', usersController.getById);
 router.put('/users/:id', usersController.update);
 router.delete('/users/:id', usersController.delete);
 
