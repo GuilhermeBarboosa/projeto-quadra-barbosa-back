@@ -12,7 +12,28 @@ module.exports = {
       actived: true,
       createdAt: new Date(),
       updatedAt: new Date()
-    }], {});
+    },
+    {
+      nome: 'user',
+      email: 'user@gmail.com',
+      senha: 'user',
+      idade: 20,
+      role: 2,
+      actived: true,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      nome: 'teste',
+      email: 'teste@gmail.com',
+      senha: 'teste',
+      idade: 15,
+      role: 2,
+      actived: true,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }
+  ], {});
   },
 
   async down(queryInterface, Sequelize) {

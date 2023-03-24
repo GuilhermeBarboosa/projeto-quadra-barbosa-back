@@ -1,7 +1,7 @@
 {
     "client": "Thunder Client",
     "collectionName": "quadra",
-    "dateExported": "2023-03-24T13:28:02.939Z",
+    "dateExported": "2023-03-24T14:50:15.225Z",
     "version": "1.1",
     "folders": [
         {
@@ -93,7 +93,7 @@
             "method": "POST",
             "sortNum": 10000,
             "created": "2023-03-23T16:30:05.498Z",
-            "modified": "2023-03-24T13:23:05.280Z",
+            "modified": "2023-03-24T14:18:44.610Z",
             "headers": [],
             "params": [],
             "body": {
@@ -455,7 +455,7 @@
             "method": "GET",
             "sortNum": 50000,
             "created": "2023-03-24T12:57:10.956Z",
-            "modified": "2023-03-24T13:23:25.237Z",
+            "modified": "2023-03-24T14:40:14.252Z",
             "headers": [],
             "params": [],
             "body": {
@@ -463,6 +463,29 @@
                 "raw": "{\n  \"email\" : \"gui@gmail.com\",\n  \"senha\" : \"gui\"\n}",
                 "form": []
             },
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OCwibm9tZSI6Imd1aSIsImlkYWRlIjoyMCwicm9sZSI6IkFETSIsImlhdCI6MTY3OTY2ODgwOSwiZXhwIjoxNjc5NjY5MTA5fQ.TqUa5Ue059ktoRBs3YHVzqcjER-NQhB8YgtGzABIR14"
+            },
+            "tests": []
+        },
+        {
+            "_id": "3dada76e-7ede-471e-b5d7-0fc61f5532ac",
+            "colId": "05db3bab-8978-4cc0-a3c1-dfe3355ba3a2",
+            "containerId": "c56f62e5-d267-432d-b677-eb6e15470ef0",
+            "name": "verificar token user",
+            "url": "localhost:3000/users/verificartoken",
+            "method": "POST",
+            "sortNum": 60000,
+            "created": "2023-03-24T14:04:48.368Z",
+            "modified": "2023-03-24T14:07:14.067Z",
+            "headers": [
+                {
+                    "name": "x-access-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OCwibm9tZSI6Imd1aSIsImlkYWRlIjoyMCwicm9sZSI6IkFETSIsImlhdCI6MTY3OTY2NjgyOCwiZXhwIjoxNjc5NjY3MTI4fQ.voJNX_zbUZ_w2ve0Zm-a80-tVxQmBUUt-LR2MLRBVOY"
+                }
+            ],
+            "params": [],
             "tests": []
         }
     ]

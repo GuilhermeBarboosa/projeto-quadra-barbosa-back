@@ -48,7 +48,7 @@ class usersController {
             if (userExists) {
                 return res.status(400).json("Usuário já cadastrado!");
             }
-            
+
             newUsers.senha = await bcrypt.hashSync(newUsers.senha, 10);
 
             const createUsers = await database.users.create(newUsers);
@@ -138,6 +138,7 @@ class usersController {
             res.status(200).json(decoded);
         });
     }
+
 }
 
 module.exports = usersController;
