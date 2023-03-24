@@ -7,7 +7,8 @@ class jogadoresController {
                 where: { actived: true },
                 include: [{
                     model: database.users,
-                    as: "userResponse"
+                    as: "userResponse",
+                    attributes: ['id', 'nome', 'email']
                 },
                 {
                     model: database.posicoes,
@@ -28,7 +29,20 @@ class jogadoresController {
         try {
             const { id } = req.params;
             const getByIdJogadores = await database.jogadores.findOne({
-                where: { id: Number(id), actived: true }
+                where: { id: Number(id), actived: true, },
+                include: [{
+                    model: database.users,
+                    as: "userResponse",
+                    attributes: ['id', 'nome', 'email']
+                },
+                {
+                    model: database.posicoes,
+                    as: "posicaoResponse"
+                },
+                {
+                    model: database.times,
+                    as: "timeResponse"
+                }] 
             });
             return res.status(200).json(getByIdJogadores);
         } catch (error) {
