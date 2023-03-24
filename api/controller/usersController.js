@@ -16,7 +16,10 @@ class usersController {
         try{
             const { id } = req.params;
             const getByIdUsers = await database.users.findOne({
-                where: { id: Number(id), actived: true }
+                where: { id: Number(id), actived: true },
+                include: {
+                    model: database.roles
+                }
             });
             return res.status(200).json(getByIdUsers);
         }catch(error){
