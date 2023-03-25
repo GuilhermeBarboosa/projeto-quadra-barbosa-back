@@ -1,6 +1,7 @@
 const database = require('../models');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const blacklist = [];
 require("dotenv").config();
 
 class usersController {
@@ -88,11 +89,9 @@ class usersController {
             const { email } = req.body.email;
             const getByIdUsers = await database.users.findOne({
                 where: {
-
                     email: {
                         [database.Sequelize.Op.like]: `%${req.body.email}%`
                     },
-
                     actived: true
                 },
                 include: [{
@@ -110,7 +109,7 @@ class usersController {
                 const token = jwt.sign(
                     { userId: getByIdUsers.id, role: getByIdUsers.roleResponse.role},
                     process.env.JWT_SECRET,
-                    { expiresIn: '24h' });
+                    { expiresIn: "1h" });
                 return res.json({ auth: true, token })
                 
             } else {
@@ -122,14 +121,18 @@ class usersController {
         }
     }
 
-    // static async logout(req, res) {
-    //     blacklist.push(req.headers['x-access-token']);
-    //     res.status(200).send("Logout realizado com sucesso!");
-    // }
+    static async logout(req, res) {
+        blacklist.push(req.headers['x-access-token']);
+        res.status(200).send("Logout realizado com sucesso!");
+    }
 
     static async verifyToken(req, res, next) {
 
         const token = req.headers['x-access-token'];
+
+        const index = blacklist.indexOf(item => item === token);
+
+        if (index !== -1) return res.status(401).json({ auth: false, message: 'Token invalide.' });
 
         if (!token) return res.status(401).json({ auth: false, message: 'No token provided.' });
         
