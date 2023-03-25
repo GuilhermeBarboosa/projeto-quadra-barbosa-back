@@ -2,6 +2,7 @@ const database = require('../models');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 require("dotenv").config();
+
 class usersController {
     static async getAll(req, res) {
         try {
@@ -84,10 +85,7 @@ class usersController {
 
     static async getLogin(req, res) {
         try {
-
-            // console.log(req.body.email);
             const { email } = req.body.email;
-
             const getByIdUsers = await database.users.findOne({
                 where: {
 
@@ -97,25 +95,24 @@ class usersController {
 
                     actived: true
                 },
-
                 include: [{
                     model: database.roles,
                     as: "roleResponse"
                 }]
-
             });
 
             if (!getByIdUsers) {
                 return res.status(401).json("Usuário não encontrado!");
             }
-       
+
             if (await bcrypt.compare(req.body.senha, getByIdUsers.senha)) {
-                let token = jwt.sign(
-                    { id: getByIdUsers.id, nome: getByIdUsers.nome, idade: getByIdUsers.idade, role: getByIdUsers.roleResponse.role },
+
+                const token = jwt.sign(
+                    { userId: getByIdUsers.id, role: getByIdUsers.roleResponse.role },
                     process.env.JWT_SECRET,
-                    { expiresIn: 300 });
+                    { expiresIn: '24h' });
                 return res.json({ auth: true, token })
-                // return res.status(200).json(getByIdUsers);
+                
             } else {
                 return res.status(401).json("Senha incorreta!");
             }
@@ -125,24 +122,27 @@ class usersController {
         }
     }
 
-    static async logout(req, res) {
-        blacklist.push(req.headers['x-access-token']);
-        res.status(200).send("Logout realizado com sucesso!");
-    }
+    // static async logout(req, res) {
+    //     blacklist.push(req.headers['x-access-token']);
+    //     res.status(200).send("Logout realizado com sucesso!");
+    // }
 
-    static async verifyToken(req, res) {
+    static async verifyToken(req, res, next) {
 
-        let token = req.body.token || req.query.token || req.headers['x-access-token'];
+        const token = req.headers['x-access-token'];
+
         if (!token) return res.status(401).json({ auth: false, message: 'No token provided.' });
-
+        
         jwt.verify(token, process.env.JWT_SECRET, function (err, decoded) {
             if (err) return res.status(500).json({ auth: false, message: 'Failed to authenticate token.' });
 
-            req.userId = decoded.id;
-            res.status(200).json(decoded);
+            req.userId = decoded.userId;
+            next();
         });
     }
 
 }
+
+
 
 module.exports = usersController;

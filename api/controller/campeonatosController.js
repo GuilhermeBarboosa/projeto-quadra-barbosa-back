@@ -3,6 +3,8 @@ const database = require('../models');
 class campeonatosController {
     static async getAll(req, res) {
         try{
+
+            console.log(req.userId + ' fez chamada');
             const getlAllCampeonatos = await database.campeonatos.findAll({
                 where: { actived: true }
             });
