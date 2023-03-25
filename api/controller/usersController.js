@@ -108,7 +108,7 @@ class usersController {
             if (await bcrypt.compare(req.body.senha, getByIdUsers.senha)) {
 
                 const token = jwt.sign(
-                    { userId: getByIdUsers.id, role: getByIdUsers.roleResponse.role },
+                    { userId: getByIdUsers.id, role: getByIdUsers.roleResponse.role},
                     process.env.JWT_SECRET,
                     { expiresIn: '24h' });
                 return res.json({ auth: true, token })
@@ -137,6 +137,8 @@ class usersController {
             if (err) return res.status(500).json({ auth: false, message: 'Failed to authenticate token.' });
 
             req.userId = decoded.userId;
+            console.log(decoded)
+            req.role = decoded.role;
             next();
         });
     }

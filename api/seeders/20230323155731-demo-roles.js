@@ -11,7 +11,7 @@ module.exports = {
         role: 'JOGADOR'
       },
       { 
-        role: 'DONO'
+        role: 'TECNICO'
       }
     ], {});
   },
