@@ -1,7 +1,7 @@
 {
     "client": "Thunder Client",
     "collectionName": "quadra",
-    "dateExported": "2023-03-25T05:37:54.560Z",
+    "dateExported": "2023-03-26T17:50:01.846Z",
     "version": "1.1",
     "folders": [
         {
@@ -43,6 +43,13 @@
             "created": "2023-03-25T03:40:58.246Z",
             "sortNum": 60000,
             "settings": {}
+        },
+        {
+            "_id": "1e8ea6ff-ad2f-4902-a2b0-834287cdf430",
+            "name": "roles",
+            "containerId": "",
+            "created": "2023-03-26T17:39:15.201Z",
+            "sortNum": 70000
         }
     ],
     "requests": [
@@ -491,6 +498,34 @@
                     "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImlhdCI6MTY3OTcyMTM1OCwiZXhwIjoxNjc5ODA3NzU4fQ.z4POrWkx5TeDPPiPnySYu-wIkUs3wR79NATd3vTK6B4"
                 }
             ],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "f689ac15-b602-4331-9565-095f822f2861",
+            "colId": "c90152b8-1147-499b-907a-ef4fc1dc6328",
+            "containerId": "1e8ea6ff-ad2f-4902-a2b0-834287cdf430",
+            "name": "get all roles",
+            "url": "localhost:3000/roles",
+            "method": "GET",
+            "sortNum": 70000,
+            "created": "2023-03-26T17:39:21.158Z",
+            "modified": "2023-03-26T17:39:46.512Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "7708b2d6-c38c-4d96-a8fe-31a792bdb59e",
+            "colId": "c90152b8-1147-499b-907a-ef4fc1dc6328",
+            "containerId": "1e8ea6ff-ad2f-4902-a2b0-834287cdf430",
+            "name": "get id roles",
+            "url": "localhost:3000/roles/2",
+            "method": "GET",
+            "sortNum": 80000,
+            "created": "2023-03-26T17:39:26.776Z",
+            "modified": "2023-03-26T17:39:52.943Z",
+            "headers": [],
             "params": [],
             "tests": []
         }
