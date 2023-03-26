@@ -122,16 +122,15 @@ class usersController {
     }
 
     static async logout(req, res) {
-        blacklist.push(req.headers['x-access-token']);
+        blacklist.push(req.body.token);
+
+
         res.status(200).send("Logout realizado com sucesso!");
     }
 
     static async verifyToken(req, res, next) {
+        const token = req.body.token;
 
-        const token = req.headers['x-access-token'];
-
-        console.log(token);
-        
         const index = blacklist.indexOf(item => item === token);
 
         if (index !== -1) return res.status(401).json({ auth: false, message: 'Token invalide.' });
@@ -142,8 +141,8 @@ class usersController {
             if (err) return res.status(500).json({ auth: false, message: 'Failed to authenticate token.' });
 
             req.userId = decoded.userId;
-            console.log(decoded)
             req.role = decoded.role;
+            res.send(decoded);
             next();
         });
     }
