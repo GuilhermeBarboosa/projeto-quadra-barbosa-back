@@ -130,6 +130,8 @@ class usersController {
 
         const token = req.headers['x-access-token'];
 
+        console.log(token);
+        
         const index = blacklist.indexOf(item => item === token);
 
         if (index !== -1) return res.status(401).json({ auth: false, message: 'Token invalide.' });
