@@ -2,6 +2,7 @@ const database = require('../models');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const blacklist = [];
+const { Op } = require("sequelize");
 require("dotenv").config();
 
 class usersController {
@@ -64,6 +65,20 @@ class usersController {
         try {
             const { id } = req.params;
             const updateUsers = req.body;
+
+            const userExists = await database.users.findOne({
+                where: {
+                    id: Number(id),
+                    actived: true
+                }   
+            });
+
+            if (updateUsers.senha === userExists.senha) {
+                return res.status(400).json("A senha não pode ser igual a anterior!");
+            }else{
+                updateUsers.senha = await bcrypt.hashSync(updateUsers.senha, 10);
+            }
+    
             await database.users.update(updateUsers, { where: { id: Number(id) } });
             const getUsers = await database.users.findOne({ where: { id: Number(id) } });
             return res.status(200).json(getUsers);
@@ -75,10 +90,18 @@ class usersController {
     static async delete(req, res) {
         try {
             const { id } = req.params;
-            const deleteUser = await database.users.findOne({ where: { id: Number(id) } });
-            deleteUser.actived = false;
-            await database.users.update(deleteUser, { where: { id: Number(id) } });
-            return res.status(200).json(deleteUser);
+            
+            const deleteUser = await database.users.findOne({
+                where: {
+                    id: Number(id)
+                }   
+            });
+
+            let deleteDTO = JSON.parse(JSON.stringify(deleteUser));
+            deleteDTO.actived = false;
+
+            await database.users.update(deleteDTO, { where: { id: Number(id) }});
+            return res.status(200).json('Usuário deletado com sucesso!');
         } catch (error) {
             return res.status(500).json(error.message);
         }
