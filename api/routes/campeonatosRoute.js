@@ -6,7 +6,8 @@ const roleslist = require('../config/roles');
 
 const router = Router();
 
-router.get('/campeonatos', usersController.verifyToken, basicAuth(roleslist.ADMIN), campeonatosController.getAll);
+// router.get('/campeonatos', usersController.verifyToken, basicAuth(roleslist.ADMIN), campeonatosController.getAll);
+router.get('/campeonatos', campeonatosController.getAll);
 router.get('/campeonatos/:id', campeonatosController.getById);
 router.post('/campeonatos', campeonatosController.create);
 router.put('/campeonatos/:id', campeonatosController.update);
