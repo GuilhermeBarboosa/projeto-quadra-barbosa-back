@@ -76,8 +76,12 @@ class jogadoresController {
         try {
             const { id } = req.params;
             const deleteJogadore = await database.jogadores.findOne({ where: { id: Number(id) } });
-            deleteJogadore.actived = false;
-            await database.jogadores.update(deleteJogadore, { where: { id: Number(id) } });
+        
+
+            let deleteDTO = JSON.parse(JSON.stringify(deleteJogadore));
+            deleteDTO.actived = false;
+
+            await database.jogadores.update(deleteDTO, { where: { id: Number(id) } });
             return res.status(200).json(deleteJogadore);
         } catch (error) {
             return res.status(500).json(error.message);

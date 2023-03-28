@@ -52,9 +52,12 @@ class campeonatosController {
         try{
             const { id } = req.params;
             const deleteCampeonato = await database.campeonatos.findOne({ where: { id: Number(id) } });
-            deleteCampeonato.actived = false;
-            await database.campeonatos.update(deleteCampeonato, { where: { id: Number(id) } });
-            return res.status(200).json(deleteCampeonato);
+
+            let deleteDTO = JSON.parse(JSON.stringify(deleteCampeonato));
+            deleteDTO.actived = false;
+
+            await database.campeonatos.update(deleteDTO, { where: { id: Number(id) } });
+            return res.status(200).json(deleteDTO);
         }catch(error){
             return res.status(500).json(error.message);
         }

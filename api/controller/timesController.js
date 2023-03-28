@@ -27,6 +27,9 @@ class timesController {
     static async create(req, res) {
         try{
             const newTimes = req.body;
+
+            console.log(newTimes)
+
             const createTimes = await database.times.create(newTimes);
             return res.status(200).json(createTimes);
         }catch(error){
@@ -49,10 +52,14 @@ class timesController {
     static async delete(req, res) {
         try{
             const { id } = req.params;
+
             const deleteTime = await database.times.findOne({ where: { id: Number(id) } });
-            deleteTime.actived = false;
-            await database.times.update(deleteTime, { where: { id: Number(id) } });
-            return res.status(200).json(deleteTime);
+
+            let deleteDTO = JSON.parse(JSON.stringify(deleteTime));
+            deleteDTO.actived = false;
+
+            await database.times.update(deleteDTO, { where: { id: Number(id) } });
+            return res.status(200).json(deleteDTO);
         }catch(error){
             return res.status(500).json(error.message);
         }

@@ -72,9 +72,12 @@ class timecampeonatoController {
         try {
             const { id } = req.params;
             const deleteTimeCampeonato = await database.time_campeonato.findOne({ where: { id: Number(id) } });
-            deleteTimeCampeonato.actived = false;
-            await database.time_campeonato.update(deleteTimeCampeonato, { where: { id: Number(id) } });
-            return res.status(200).json(deleteTimeCampeonato);
+
+            let deleteDTO = JSON.parse(JSON.stringify(deleteTimeCampeonato));
+            deleteDTO.actived = false;
+
+            await database.time_campeonato.update(deleteDTO, { where: { id: Number(id) } });
+            return res.status(200).json(deleteDTO);
         } catch (error) {
             return res.status(500).json(error.message);
         }
