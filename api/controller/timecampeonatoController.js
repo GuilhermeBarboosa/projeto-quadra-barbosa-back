@@ -31,12 +31,12 @@ class timecampeonatoController {
                     id: Number(id), actived: true,
                 },
                 include: [{
-                    model: database.time,
-                    as: 'time',
+                    model: database.times,
+                    as: 'timeResponse',
                 },
                 {
-                    model: database.campeonato,
-                    as: 'campeonato',
+                    model: database.campeonatos,
+                    as: 'campeonatoResponse',
                 }
                 ]
             });
@@ -49,6 +49,21 @@ class timecampeonatoController {
     static async create(req, res) {
         try {
             const newTimeTimeCampeonato = req.body;
+
+            console.log(newTimeTimeCampeonato)
+
+            const getByIdTimeTimeCampeonato = await database.time_campeonato.findOne({
+                where: {
+                    campeonato: Number(newTimeTimeCampeonato.campeonato),
+                    time: Number(newTimeTimeCampeonato.time),
+                    actived: true,
+                },
+            });
+
+            if(getByIdTimeTimeCampeonato){
+                return res.status(500).json("Time já cadastrado no campeonato");
+            }
+
             const createTimeTimeCampeonato = await database.time_campeonato.create(newTimeTimeCampeonato);
             return res.status(200).json(createTimeTimeCampeonato);
         } catch (error) {
@@ -60,6 +75,19 @@ class timecampeonatoController {
         try {
             const { id } = req.params;
             const updateTimeTimeCampeonato = req.body;
+
+            const getByIdTimeTimeCampeonato = await database.time_campeonato.findOne({
+                where: {
+                    campeonato: Number(newTimeTimeCampeonato.campeonato),
+                    time: Number(newTimeTimeCampeonato.time),
+                    actived: true,
+                },
+            });
+
+            if(getByIdTimeTimeCampeonato){
+                return res.status(500).json("Time já cadastrado no campeonato");
+            }
+
             await database.time_campeonato.update(updateTimeTimeCampeonato, { where: { id: Number(id) } });
             const getTimeTimeCampeonato = await database.time_campeonato.findOne({ where: { id: Number(id) } });
             return res.status(200).json(getTimeTimeCampeonato);
