@@ -46,6 +46,32 @@ class timecampeonatoController {
         }
     }
 
+    static async getTimes(req, res) {
+        try {
+            const { id } = req.params;
+
+            console.log(id)
+            const getByIdTimeTimeCampeonato = await database.time_campeonato.findAll({
+                where: {
+                    campeonato: Number(id), 
+                    actived: true,
+                },
+                include: [{
+                    model: database.times,
+                    as: 'timeResponse',
+                },
+                {
+                    model: database.campeonatos,
+                    as: 'campeonatoResponse',
+                }
+                ]
+            });
+            return res.status(200).json(getByIdTimeTimeCampeonato);
+        } catch (error) {
+            return res.status(500).json(error.message);
+        }
+    }
+
     static async create(req, res) {
         try {
             const newTimeTimeCampeonato = req.body;
