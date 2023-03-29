@@ -5,8 +5,8 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.bulkInsert('users', [{
       nome: 'admin',
-      email: 'admin@gmail.com',
-      senha: 'admin',
+      email: 'adm@gmail.com',
+      senha: '$2b$10$z8hpSOLSXM0GM3Piuon4Aexi.To2QI9um48sg3gz5e.pKRafS4JxK',
       idade: 20,
       role: 1,
       actived: true,
@@ -16,7 +16,7 @@ module.exports = {
     {
       nome: 'user',
       email: 'user@gmail.com',
-      senha: 'user',
+      senha: '$2b$10$z8hpSOLSXM0GM3Piuon4Aexi.To2QI9um48sg3gz5e.pKRafS4JxK',
       idade: 20,
       role: 2,
       actived: true,
@@ -26,7 +26,7 @@ module.exports = {
     {
       nome: 'teste',
       email: 'teste@gmail.com',
-      senha: 'teste',
+      senha: '$2b$10$z8hpSOLSXM0GM3Piuon4Aexi.To2QI9um48sg3gz5e.pKRafS4JxK',
       idade: 15,
       role: 2,
       actived: true,
