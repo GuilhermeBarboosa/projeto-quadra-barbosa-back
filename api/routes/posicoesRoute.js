@@ -2,8 +2,9 @@ const { Router } = require('express');
 const posicoesController = require('../controller/posicoesController');
 
 const router = Router();
+const uri = '/posicoes'
 
-router.get('/posicoes', posicoesController.getAll);
-router.get('/posicoes/:id', posicoesController.getById);
+router.get(`${uri}`, posicoesController.getAll);
+router.get(`${uri}/:id`, posicoesController.getById);
 
 module.exports = router;

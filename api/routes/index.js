@@ -9,5 +9,11 @@ const posicoesRoute = require('./posicoesRoute')
 
 module.exports = app => {
     app.use(bodyParser.json())
-    app.use(campeonatosRoute, timesRoute, usersRoute, jogadoresRoute, timecampeonatoRoute, rolesRoute, posicoesRoute)
+    app.use(campeonatosRoute, 
+            timesRoute, 
+            usersRoute, 
+            jogadoresRoute, 
+            timecampeonatoRoute, 
+            rolesRoute, 
+            posicoesRoute)
 }

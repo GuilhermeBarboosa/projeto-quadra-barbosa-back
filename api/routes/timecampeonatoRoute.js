@@ -2,12 +2,13 @@ const { Router } = require('express');
 const timecampeonatoController = require('../controller/timecampeonatoController');
 
 const router = Router();
+const uri = '/timecampeonato'
 
-router.get('/timecampeonato', timecampeonatoController.getAll);
-router.get('/timecampeonato/:id', timecampeonatoController.getById);
-router.get('/timecampeonato/getPartidas/:id', timecampeonatoController.getTimes);
-router.post('/timecampeonato', timecampeonatoController.create);
-router.put('/timecampeonato/:id', timecampeonatoController.update);
-router.delete('/timecampeonato/:id', timecampeonatoController.delete);
+router.get(`${uri}`, timecampeonatoController.getAll);
+router.get(`${uri}/:id`, timecampeonatoController.getById);
+router.get(`${uri}/getPartidas/:id`, timecampeonatoController.getTimes);
+router.post(`${uri}`, timecampeonatoController.create);
+router.put(`${uri}/:id`, timecampeonatoController.update);
+router.delete(`${uri}/:id`, timecampeonatoController.delete);
 
 module.exports = router;
