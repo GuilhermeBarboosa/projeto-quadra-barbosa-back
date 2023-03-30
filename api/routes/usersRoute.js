@@ -10,6 +10,7 @@ router.post(`${uri}/verificartoken`, usersController.verifyToken);
 router.get(`${uri}`, usersController.getAll);
 router.post(`${uri}`, usersController.create);
 router.get(`${uri}/:id`, usersController.getById);
+router.put(`${uri}/ativar/:id`, usersController.ativar);
 router.put(`${uri}/:id`, usersController.update);
 router.delete(`${uri}/:id`, usersController.delete);
 

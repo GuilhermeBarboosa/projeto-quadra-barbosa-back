@@ -87,6 +87,38 @@ class jogadoresController {
             return res.status(500).json(error.message);
         }
     }
+
+
+    static async getByJogadorUser(req, res) {
+        try {
+            const { id } = req.params;
+
+            console.log(id);
+            const getByIdJogadores = await database.jogadores.findOne({
+                where: { user: Number(id), actived: true, },
+                include: [{
+                    model: database.users,
+                    as: "userResponse",
+                    attributes: ['id', 'nome', 'email', 'idade']
+                },
+                {
+                    model: database.posicoes,
+                    as: "posicaoResponse"
+                },
+                {
+                    model: database.times,
+                    as: "timeResponse"
+                }] 
+            });
+
+            if(getByIdJogadores == null)
+                return res.status(200).json({message: "error"});
+
+            return res.status(200).json(getByIdJogadores);
+        } catch (error) {
+            return res.status(500).json(error.message);
+        }
+    }
 }
 
 module.exports = jogadoresController;

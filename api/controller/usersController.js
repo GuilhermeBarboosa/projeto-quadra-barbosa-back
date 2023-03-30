@@ -9,7 +9,6 @@ class usersController {
     static async getAll(req, res) {
         try {
             const getlAllUsers = await database.users.findAll({
-                where: { actived: true },
                 include: {
                     model: database.roles,
                     as: "roleResponse"
@@ -25,7 +24,7 @@ class usersController {
         try {
             const { id } = req.params;
             const getByIdUsers = await database.users.findOne({
-                where: { id: Number(id), actived: true },
+                where: { id: Number(id) },
                 include: [{
                     model: database.roles,
                     as: "roleResponse"
@@ -68,8 +67,7 @@ class usersController {
 
             const userExists = await database.users.findOne({
                 where: {
-                    id: Number(id),
-                    actived: true
+                    id: Number(id)
                 }   
             });
 
@@ -81,6 +79,31 @@ class usersController {
     
             await database.users.update(updateUsers, { where: { id: Number(id) } });
             const getUsers = await database.users.findOne({ where: { id: Number(id) } });
+            return res.status(200).json(getUsers);
+        } catch (error) {
+            return res.status(500).json(error.message);
+        }
+    }
+
+    static async ativar(req, res) {
+        try {
+            const { id } = req.params;
+            const updateUsers = req.body;
+
+            const userExists = await database.users.findOne({
+                where: {
+                    id: Number(id)
+                }   
+            });
+
+            let ativarUser = JSON.parse(JSON.stringify(userExists));
+            ativarUser.actived = true;
+
+            console.log(ativarUser)
+  
+            await database.users.update(ativarUser, { where: { id: Number(id) } });
+            const getUsers = await database.users.findOne({ where: { id: Number(id) } });
+
             return res.status(200).json(getUsers);
         } catch (error) {
             return res.status(500).json(error.message);
